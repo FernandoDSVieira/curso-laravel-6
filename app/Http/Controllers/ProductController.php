@@ -11,7 +11,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('teste');
+
+        $teste = 123;
+
+        return view('admin.pages.products.index', compact('teste'));
     }
 
     /**
@@ -19,7 +22,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.pages.products.create');
     }
 
     /**
@@ -27,7 +30,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd('cadastrando..');
     }
 
     /**

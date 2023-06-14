@@ -3,7 +3,7 @@
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
-Route::resource('products', ProductController::class)->middleware('auth');
+Route::resource('products', ProductController::class);
 
 // Route::put('/products/{id}', [ProductController::class, 'update'])->name('products.update');
 // Route::get('/products/{id}/edit', [ProductController::class, 'edit'])->name('products.edit');
