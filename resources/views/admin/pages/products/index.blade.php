@@ -7,19 +7,25 @@
     <a href="{{ route('products.create')}}">Cadastrar</a>
     <hr>
 
-    @component('admin.components.card')
-        @slot('title')
-            <h1> titulo card </h1>
-        @endslot
-        Um card de exemplo
-    @endcomponent
+    <table border="1" class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Preço</th>
+                <th>Descrição</th>
+            </tr>
+        </thead>
+        <tbody >
+            @foreach ($products as $product)
+                <tr>
+                    <td>{{ $product->name}}</td>
+                    <td>{{ $product->price }}</td>
+                    <td>
+                        <a href="">Detalhes</a>
+                    </td>
+            @endforeach
+        </tbody>
+    </table>
 
-    @include('admin.includes.alerts')
-
-    <hr>
-
-    @if ($teste === '123')
-        <p>é igual<p>
-    @endif
-
+        {!! $products->links() !!}
 @endsection
