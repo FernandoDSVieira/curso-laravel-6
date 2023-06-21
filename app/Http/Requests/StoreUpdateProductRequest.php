@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+
 class StoreUpdateProductRequest extends FormRequest
 {
     /**
@@ -23,8 +24,9 @@ class StoreUpdateProductRequest extends FormRequest
     {
         return [
             'name' => 'required|min:3|max:255',
-            'description' => 'nullable|min:3|max:10000',
-            'photo' => 'required|pdf',
+            'description' => 'required|min:3|max:10000',
+            'price' => 'required',
+            'image' => 'nullable|image',
         ];
     }
 
@@ -33,7 +35,7 @@ class StoreUpdateProductRequest extends FormRequest
         return [
                 'name.required' => 'nome é obrigatorio',
                 'name.min' => 'minimo de caracteres é 3',
-                'photo.required' => 'arquivo pdf é obrigatorio'
+                'photo.required' => 'arquivo é obrigatorio'
         ];
     }
 
