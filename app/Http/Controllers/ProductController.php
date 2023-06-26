@@ -82,7 +82,7 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreUpdateProductRequest $request, string $id)
     {
         if (!$product = $this->repository->find($id))
         return redirect()->back();
@@ -105,6 +105,18 @@ class ProductController extends Controller
 
         return redirect()->route('products.index');
 
+    }
+
+    public function search(Request $request)
+    {
+        $filters = $request->except('_token');
+
+        $products = $this->repository->search($request->filter);
+
+        return view('admin.pages.products.index', [
+            'products' => $products,
+            'filters' => $filters,
+        ]);
     }
 
 }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
+Route::any('products/search', [ProductController::class, 'search'])->name('products.search');
 Route::resource('products', ProductController::class);
 
 // Route::put('/products/{id}', [ProductController::class, 'update'])->name('products.update');
