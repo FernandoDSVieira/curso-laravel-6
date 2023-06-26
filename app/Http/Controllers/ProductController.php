@@ -57,22 +57,26 @@ class ProductController extends Controller
     public function show(string $id)
     {
         // $product = Product::where('id', $id)->firts();
+        $product = $this->repository->find($id);
 
-        if (!$this->repository::find($id))
+        if (!$product::find($id))
             return redirect()->back();
 
 
         return view('admin.pages.products.show', [
-            'product' => $this->repository
+            'product' => $product
         ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        return view('admin.pages.products.edit', compact('id'));
+       if (!$product = $this->repository->find($id))
+            return redirect()->back();
+
+        return view('admin.pages.products.edit', compact('product'));
     }
 
     /**
@@ -80,7 +84,12 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        dd('editando o produto: {$id}');
+        if (!$product = $this->repository->find($id))
+        return redirect()->back();
+
+        $product->update($request->all());
+
+        return redirect()->route('products.index');
     }
 
     /**
@@ -90,8 +99,11 @@ class ProductController extends Controller
     {
         $product = $this->repository->where('id', $id)->first();
         if (!$product)
-        return redirect()->back();
+            return redirect()->back();
 
+        $product->delete();
+
+        return redirect()->route('products.index');
 
     }
 
