@@ -10,7 +10,7 @@
 <body>
     <div class="container">
     @yield('content')
-    <h1>teste</h1>
+    {{-- <h1>teste</h1> --}}
     </div>
 </body>
 </html>

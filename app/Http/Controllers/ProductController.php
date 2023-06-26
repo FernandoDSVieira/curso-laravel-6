@@ -4,13 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUpdateProductRequest;
 use App\Models\Product;
+use Illuminate\Cache\Repository;
 use Illuminate\Http\Request;
+
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
+    protected $request;
+    private $repository;
+
+
+    public function __construct(Request $request, Product $product)
+    {
+        $this->request = $request;
+        $this->repository = $product;
+    }
+
     public function index()
     {
 
@@ -34,21 +44,11 @@ class ProductController extends Controller
      */
     public function store(StoreUpdateProductRequest $request) {
 
-        // $request->validate([
-        //     'name' => 'required|min:3|max:255',
-        //     'description' => 'nullable|min:3|max:10000',
-        //     'photo' => 'required|pdf',
-        // ]);
+        $data = $request->only( 'name', 'description', 'price');
 
-        // dd($request->all());
-        // dd($request->only(['name', 'description']));
-        // dd($request->input(['teste', 'default']));
-        // dd($request->name('name'));
-        if ($request->file('photo')->isValid()) {
-            // $request->file('photo')->store('products');
-            $nameFile = $request->name . '.' . $request->photo->extension();
-            dd($request->file('photo')->storeAs('products', $nameFile));
-        }
+        $this->repository::create($data);
+
+        return redirect()->route('products.index');
     }
 
     /**
@@ -58,12 +58,12 @@ class ProductController extends Controller
     {
         // $product = Product::where('id', $id)->firts();
 
-        if (!$product = Product::find($id))
+        if (!$this->repository::find($id))
             return redirect()->back();
 
 
         return view('admin.pages.products.show', [
-            'product' => $product
+            'product' => $this->repository
         ]);
     }
 
@@ -88,7 +88,11 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $product = $this->repository->where('id', $id)->first();
+        if (!$product)
+        return redirect()->back();
+
+
     }
 
 }
