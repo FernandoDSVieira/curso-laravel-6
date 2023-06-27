@@ -46,7 +46,13 @@ class ProductController extends Controller
 
         $data = $request->only( 'name', 'description', 'price');
 
-        $this->repository::create($data);
+        if ($request->hasFile('image') && $request->image->isValid()) {
+            $imagePath = $request->image->store('products');
+
+            $data['image'] = $imagePath;
+        }
+
+        $this->repository->create($data);
 
         return redirect()->route('products.index');
     }

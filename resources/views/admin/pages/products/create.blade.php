@@ -7,8 +7,8 @@
 
 
 
-    <form action="{{ route('products.store')}}" method="post" enctype="multipart/form-data" class="form">
-        @include('admin.pages.products._partials.form');
+    <form action="{{ route('products.store')}}" method="post" enctype="multipart/form-data" class="form" >
+        @include('admin.pages.products._partials.form')
     </form>
 @endsection
 
